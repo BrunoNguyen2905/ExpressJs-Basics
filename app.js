@@ -6,8 +6,8 @@ const shopRoutes = require ('./routes/shop');
 const path = require('path');
 
 const app = express();
-
-app.set('view engine', 'pug'); //set default templating engines
+app.set('view engine', 'ejs');
+// app.set('view engine', 'pug'); //set default templating engines
 app.set('views', 'views'); 
 
 app.use(bodyParser.urlencoded({extended: true})); //do whole requests body parsing we did manually
