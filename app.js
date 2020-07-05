@@ -1,10 +1,11 @@
 // const http = require('http'); //global module
 const express = require('express');
 const bodyParser = require('body-parser');
-const adminData = require('./routes/admin');
+
+const adminRoute = require('./routes/admin');
 const shopRoutes = require ('./routes/shop');
 const path = require('path');
-
+const errorController = require('./controllers/error');
 const app = express();
 app.set('view engine', 'ejs');
 // app.set('view engine', 'pug'); //set default templating engines
@@ -18,13 +19,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 //     next();
 // });
 
-app.use('/admin',adminData.routes);
+app.use('/admin',adminRoute);
 app.use (shopRoutes);
 
-app.use((req, res, next) =>{
-    // res.status(404).sendFile(path.join(__dirname, 'views', '404page.html'));
-    res.status(404).render('404page', {pageTitle: '404'});
-})
+app.use(errorController.get404);
 
 
 
