@@ -13,8 +13,11 @@ const getProductsFromFile = cb => {
 }
 // const products= [];
 module.exports = class Product {
-    constructor(t) {
-        this.title = t;// create an obj based on this class where we can pass the prop of the class to constructor when we call new Product()
+    constructor(title, imageUrl, description, price) {
+        this.title = title;// create an obj based on this class where we can pass the prop of the class to constructor when we call new Product()
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.price = price;
     }
 
     save() {
