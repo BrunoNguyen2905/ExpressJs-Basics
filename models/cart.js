@@ -44,6 +44,9 @@ module.exports = class Cart {
            }
            const updatedCart = {...JSON.parse(fileContent)};
            const product = updatedCart.products.find(prod => prod.id === id);  //find product id to get info abt product.qty
+            if(!product){ // if product dont exist,means cart dont have that product, just return and dont continue remaining code
+                return;
+            }
            const productQty = product.qty;
            updatedCart.products = updatedCart.products.filter(prod => prod.id !== id);
            updatedCart.totalPrice = updatedCart.totalPrice - productPrice*productQty;
