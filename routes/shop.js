@@ -9,7 +9,13 @@ router.get('/', shopController.getIndex);
 
 router.get('/products', shopController.getProducts);
 
-router.get('/cart', shopController.getCart);
+router.get('/products/:productId', shopController.getProduct);
+
+router.get('/cart', shopController.getCart); //display cart items
+
+router.post('/cart', shopController.postCart); // add new product/ increase exsiting items quantity
+
+router.post('/cart-delete-item', shopController.postCartDeleteProduct);
 
 router.get('/orders', shopController.getOrders);
 
