@@ -4,36 +4,45 @@ const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => { 
     // const products = adminData.products; no longer need cause already initialized
-    Product.fetchAll((products) => {
-        res.render('shop/product-list', {
-            prods: products, 
-            pageTitle: 'All Products', 
-            path: '/products'
-        }); //use default template engine    
-    });
+    Product.fetchAll()
+        .then(([rows, fieldData]) => {
+            res.render('shop/product-list', {
+                prods: rows, 
+                pageTitle: 'All Products', 
+                path: '/products'
+            }) //use default template engine   
+        })
+        .catch(err => console.log(err));
+   
 }; 
 
 exports.getProduct = (req, res, next) => {
     const prodId = req.params.productId; //cause we use productId in shop route in url => param
-    Product.findById(prodId, product =>{
-        console.log(product);
-        res.render('shop/product-detail', {
-            product: product,
-            pageTitle: product.title,
-            path:'/products' 
-        });
-    });
+    Product.findById(prodId)
+        .then(([product, fieldData]) => {
+            console.log(product[0]);  //need to add [0] after product//product is an array w 1 element, view expect 1 single obj, not an array w 1 obj
+            res.render('shop/product-detail', {
+                product: product[0],
+                pageTitle: product[0].title,
+                path:'/products' 
+            });
+        })
+        .catch(err => console.log(err));
+    
     
 }
 
 exports.getIndex = (req,res,next) => {
-    Product.fetchAll((products) => {
-        res.render('shop/index', {
-            prods: products, 
-            pageTitle: 'Shop', 
-            path: '/'
-        }); //use default template engine    
-    });
+    Product.fetchAll()
+        .then(([rows, fieldData]) => { //destructing obj
+            res.render('shop/index', {
+                prods: rows, 
+                pageTitle: 'Shop', 
+                path: '/'
+            }); //use default template engine  
+        })
+        .catch(err => console.log(err));
+      
 };
 
 exports.getCart = (req,res,next) => { 
